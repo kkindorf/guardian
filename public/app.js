@@ -1,3 +1,39 @@
+//possible url endpoint from our api
+// /api/<user>/saved-articles
+
+var MOCK_SAVED_ARTICLES = {
+    "saved_articles": [
+        {
+            "id": "1111111",
+            "searchTerm": "Dogs",
+            "title": "All Dogs Really Do Go To Heaven.",
+            "format": "Article",
+            "dateSearched": "Feb-01-1999"
+        },
+        {
+            "id": "22222222",
+            "searchTerm": "Cats",
+            "title": "Cats Do Not Really Have Nine Lives, claims respected dentist.",
+            "format": "blog",
+            "dateSearched": "Feb-03-1999"
+        },
+        {
+            "id": "33333333",
+            "searchTerm": "Tom Brady",
+            "title": "Tom Brady Seen at Gillette Speaking and Smiling at Goodell's Jokes.",
+            "format": "Article",
+            "dateSearched": "Feb-05-1999"
+        },
+        {
+            "id": "4444444",
+            "searchTerm": "Food Truck",
+            "title": "Will New Burger King Food Truck Destroy the novel idea of eating food prepared in the back of a truck?",
+            "format": "blog",
+            "dateSearched": "Feb-04-1999"
+        }
+    ]
+};
+
 $( document ).ready(function() {
     var searchTerm = "";
 
