@@ -68,6 +68,7 @@ $( document ).ready(function() {
 })
    $(".saved").click(function(){   
         $(".results").html('');
+        $(".saved-results").html('');
         getAndDisplaySavedArticles();
     })
 });
