@@ -57,18 +57,44 @@ $( document ).ready(function() {
     searchTerm = $("#term").val();
     $('input').val('');
     $(".results").html('');
-    $("saved-results").html('');
+    $(".saved-results").html('');
     $.getJSON("https://content.guardianapis.com/search?q="+searchTerm+"&order-by=relevance&api-key=b3970af8-30fc-4f88-a6d0-2e93e044a43c", function(data){
       var resultsArr = data.response.results;
       for(var i = 0; i <resultsArr.length; i++){
-          $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button" class="btn btn-default save">Save for Later</button><p>'+resultsArr[i].sectionName+'</p><p><a                                                          href='+resultsArr[i].webUrl+' target="_blank">'+resultsArr[i].webTitle+'</a></p>                                  </div></div>');
+        var x= "saveBtn"+i;
+          $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button" id='+x+' class="btn btn-default save">Save for Later</button>                                <p>'+resultsArr[i].sectionName+'</p><p><a                                                          href='+resultsArr[i].webUrl+'>'+resultsArr[i].webTitle+'</a></p>                                  </div></div>');
       }
   
    })
+    
 })
-   $(".saved").click(function(){   
+  $(".saved").click(function(){   
         $(".results").html('');
         $(".saved-results").html('');
+    //ajax read
         getAndDisplaySavedArticles();
     })
+  
+  $(".saved-results").on("click",".saved-panel", function(){
+    $(this).find(".panel-title").attr("contenteditable", "true");
+  })
+    .keypress(function(e){
+    if(e.which === 13){
+       $(".panel-title").blur();
+        //ajax update
+      return false;
+    }
+  });
+$(".saved-results").on("click", ".delete", function(){
+  //ajax delete
+$(this).parents(".panel-default").remove();
+  
+});
+$(".results").on("click", ".save", function(){
+  //ajax post
+  $(this).text("Saved!");
+  $(this).css("color", "white");
+  $(this).css("background", "green")
+  
+});
 });
