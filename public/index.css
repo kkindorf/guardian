@@ -33,3 +33,12 @@
 p{
   padding-bottom:2%;
 }
+.saved-articles-panel{
+  position: relative;
+}
+.delete{
+  position: absolute;
+  right: 3%;
+  top:0;
+  
+}
