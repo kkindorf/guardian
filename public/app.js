@@ -63,6 +63,7 @@ $( document ).ready(function() {
       for(var i = 0; i <resultsArr.length; i++){
         var x= "saveBtn"+i;
           $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button" id='+x+' class="btn btn-default save">Save for Later</button>                                <p>'+resultsArr[i].sectionName+'</p><p><a                                                          href="'+resultsArr[i].webUrl+'" target="_blank">'+resultsArr[i].webTitle+'</a></p>                                  </div></div>');
+          
       }
   
    })
