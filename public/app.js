@@ -1,4 +1,3 @@
-
 function getSavedArticles(callback){
     $.ajax({
         type: 'GET',
@@ -11,9 +10,10 @@ function getSavedArticles(callback){
 };
 
 function displaySavedArticles(data){
+    dataArr = data;
     for (var i = 0;i<data.length;i++){
         console.log(data[i].title)
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p></div></div>");
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p></div></div>");
     }
 }
 
@@ -21,6 +21,7 @@ function getAndDisplaySavedArticles(){
     getSavedArticles(displaySavedArticles);
 }
 var post =[];
+var dataArr=[];
 $(document).ready(function() {
     var searchTerm = "";
     var form = $("form");
@@ -65,8 +66,22 @@ console.log(webTitle);
     }
   });
 $(".saved-results").on("click", ".delete", function(){
-  //ajax delete
-$(this).parents(".panel-default").remove();
+    var that = this;
+    var result = dataArr[$(this).attr("id")];
+  console.log(result._id);
+  $.ajax('/savedArticles/' + result._id, {
+        type: 'DELETE',
+        dataType: 'json',
+        success:function(){
+           $(that).parents(".panel-default").remove(); 
+        },
+        error:function(){
+            $(that).text("Error");
+            $(that).css("background", "red");
+            $(that).css("color", "white");
+        }
+    });
+
   
 });
 //if I search for the same query more than once, it 

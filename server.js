@@ -85,6 +85,19 @@ app.post('/savedArticles', function(req, res){
         });
     });
 });
+
+app.delete('/savedArticles/:id', function(req, res){
+    console.log(req.params.id);
+   var id = req.params.id;
+   SavedArticles.findByIdAndRemove(id, function(error){
+       if(error){
+           return res.status(400).json({
+               message: "you did not select a proper Id"
+           })
+       }
+       res.status(200).json(id);
+   })
+})
 app.use('*', function(req, res){
     res.status(404).json({
         message: 'Not Found'
