@@ -41,8 +41,10 @@ var SavedArticles = require("./models/saved_articles");
 
 app.get('/search', function(req, res){
     console.log("hello");
-   var q = req.params.q;
-   var url = "https://content.guardianapis.com/search?api-key=b3970af8-30fc-4f88-a6d0-2e93e044a43c&q="+q;
+   
+   var arr = Object.keys(req.query);
+   console.log(arr[0]);
+   var url = "https://content.guardianapis.com/search?q="+arr[0]+"&api-key=b3970af8-30fc-4f88-a6d0-2e93e044a43c";
    
    https.get(url, function(resp){
        //readable stream
@@ -63,12 +65,15 @@ app.get('/savedArticles', function(req, res){
 });
 
 app.post('/savedArticles', function(req, res){
-   
+    console.log(req.params);
     SavedArticles.create({
+        //body is an object in our request json object
+        searchTerm: req.body.searchTerm,
         subject: req.body.subject,
         articleURL: req.body.articleURL,
         title: req.body.title,
         format: req.body.format
+        
     }, function(err, article){
         if(err){
             return res.status(500).json({
