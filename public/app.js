@@ -13,17 +13,19 @@ function getSavedArticles(callback){
 function displaySavedArticles(data){
     for (var i = 0;i<data.length;i++){
         console.log(data[i].title)
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>  Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p></div></div>");
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p></div></div>");
     }
 }
 
 function getAndDisplaySavedArticles(){
     getSavedArticles(displaySavedArticles);
 }
+var post =[];
 $(document).ready(function() {
     var searchTerm = "";
     var form = $("form");
     var webTitle ="";
+    var resultsArr = [];
   form.submit(function(e){
     e.preventDefault();
     searchTerm = $("#term").val();
@@ -37,9 +39,9 @@ $(document).ready(function() {
         dataType: 'json'
     });
     ajax.done(function (data){
-        var resultsArr = data.response.results;
+        resultsArr = data.response.results;
       for(var i = 0; i <resultsArr.length; i++){
-          $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button"  class="btn btn-default save">Save for Later</button><p>'+resultsArr[i].sectionName+'</p><input type="hidden" name="sectionName" value='+resultsArr[i].sectionName+'><input type="hidden" name="searchTerm" value='+searchTerm+'><input type="hidden" name="url" value='+resultsArr[i].webUrl+'><input type="hidden" name="title" value='+resultsArr[i].webTitle+'><input type="hidden" name="type" value='+resultsArr[i].type+'><p><a                                                          href="'+resultsArr[i].webUrl+'" target="_blank">'+resultsArr[i].webTitle+'</a></p>                                  </div></div>');
+          $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button"  class="btn btn-default save" id="'+i+'">Save for Later</button><p>'+resultsArr[i].sectionName+'</p><p><a href="'+resultsArr[i].webUrl+'" target="_blank">'+resultsArr[i].webTitle+'</a></p></div></div>');
       }
     });
        console.log($(".save").find("p a:last").attr('href'));  
@@ -67,37 +69,45 @@ $(".saved-results").on("click", ".delete", function(){
 $(this).parents(".panel-default").remove();
   
 });
+//if I search for the same query more than once, it 
+//and save an article on the second search a query I used before it 
+//saves the first article I saved not the new article
 $(".results").on("click", ".save", function(){
-      $(this).text("Saved!");
-      $(this).css("color", "white");
-      $(this).css("background", "green");
-       var search = $("[name=searchTerm]").val();
-      var subject = $("[name=sectionName]").val();
-      var articleURL = $("[name=url]").val();
-      var title = $("[name=title]").val();
-      var format = $("[name=type]").val();
-      
-      var article = {
-         "searchTerm": search,
-         "subject":  subject,
-         "articleURL": articleURL,
-         "title": title,   
-         "format": format
-      }
+    var that = this;
+    var result = resultsArr[$(this).attr("id")];
+    var article = {
+         searchTerm: searchTerm,
+         subject:  result.sectionName,
+         articleURL: result.webUrl,
+         title: result.webTitle,   
+         format: result.type
+      };
+       $(this).attr("disabled", "true");
+       $(this).text("Saving...");
+       
+
 
   $.ajax({
       type: 'POST',
       url: 'https://kkindorf-node-kkindorf.c9users.io/savedArticles',
       data: JSON.stringify(article),
         dataType: 'json',
-        contentType: 'application/json' ,
+        contentType: 'application/json',
     
       success: function(data){
-          console.log(data);
-          console.log(data.searchTerm);
+          console.log("success", data);
+          
+          $(that).attr("disabled", "false");
+          $(that).text("Saved!");
+          $(that).css("color", "white");
+          $(that).css("background", "green");
       }, 
-      error: function() {
-          alert("there was an error");
+      error: function(err) {
+          console.log("error", err);
+          $(that).attr("disabled", "false");
+          $(that).text("Error");
+          $(that).css("color", "white");
+          $(that).css("background", "red");
       }
   });   
 });

@@ -65,7 +65,7 @@ app.get('/savedArticles', function(req, res){
 });
 
 app.post('/savedArticles', function(req, res){
-    console.log(req.params);
+    //console.log(req.params);
     SavedArticles.create({
         //body is an object in our request json object
         searchTerm: req.body.searchTerm,
@@ -80,7 +80,9 @@ app.post('/savedArticles', function(req, res){
                 message: err
             });
         }
-        res.status(201).json({});
+        res.status(201).json({
+            message: "Successful post!"
+        });
     });
 });
 app.use('*', function(req, res){
