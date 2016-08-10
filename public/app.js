@@ -11,9 +11,11 @@ function getSavedArticles(callback){
 
 function displaySavedArticles(data){
     dataArr = data;
+    
     for (var i = 0;i<data.length;i++){
         console.log(data[i].title)
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><p class='edit' id='p"+i+"'>Click here: "+data[i].notes+"</p></div></div>");
+       
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><h3>Click the space below me to add notes</h3><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
     }
 }
 
@@ -24,6 +26,7 @@ var post =[];
 var dataArr=[];
 var id="";
 $(document).ready(function() {
+
     var searchTerm = "";
     var form = $("form");
     var webTitle ="";
@@ -58,6 +61,7 @@ $(document).ready(function() {
   var putThat;
   $(".saved-results").on("click",".edit", function(){
      putThat = this;
+     $(this).text("");
     $(this).attr("contenteditable", "true");
     var pId = $(this).attr("id");
     //console.log(pId);

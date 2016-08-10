@@ -72,7 +72,8 @@ app.post('/savedArticles', function(req, res){
         subject: req.body.subject,
         articleURL: req.body.articleURL,
         title: req.body.title,
-        format: req.body.format
+        format: req.body.format,
+        notes: ""
         
     }, function(err, article){
         if(err){
