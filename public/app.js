@@ -13,7 +13,7 @@ function displaySavedArticles(data){
     dataArr = data;
     for (var i = 0;i<data.length;i++){
         console.log(data[i].title)
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p></div></div>");
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><p class='edit' id='p"+i+"'>Click here: "+data[i].notes+"</p></div></div>");
     }
 }
 
@@ -22,6 +22,7 @@ function getAndDisplaySavedArticles(){
 }
 var post =[];
 var dataArr=[];
+var id="";
 $(document).ready(function() {
     var searchTerm = "";
     var form = $("form");
@@ -45,26 +46,45 @@ $(document).ready(function() {
           $(".results").append('<div class="panel panel-default"><div class="panel-body"><button type="button"  class="btn btn-default save" id="'+i+'">Save for Later</button><p>'+resultsArr[i].sectionName+'</p><p><a href="'+resultsArr[i].webUrl+'" target="_blank">'+resultsArr[i].webTitle+'</a></p></div></div>');
       }
     });
-       console.log($(".save").find("p a:last").attr('href'));  
+      
 })
 
-console.log(webTitle);
+
   $(".saved").click(function(){   
         $(".results").html('');
         $(".saved-results").html('');
         getAndDisplaySavedArticles();
     })
-  
-  $(".saved-results").on("click",".saved-panel", function(){
-    $(this).find(".panel-title").attr("contenteditable", "true");
+  var putThat;
+  $(".saved-results").on("click",".edit", function(){
+     putThat = this;
+    $(this).attr("contenteditable", "true");
+    var pId = $(this).attr("id");
+    //console.log(pId);
+    id = pId.substring(1, pId.length);
+    id = parseInt(id);
+    console.log(dataArr[id]._id);
+   
+    
   })
     .keypress(function(e){
     if(e.which === 13){
-       $(".panel-title").blur();
-        //ajax update
-      return false;
+    dataArr[id].notes = $(putThat).html();
+    console.log(dataArr[id].notes);
+        $.ajax('/savedArticles/' + dataArr[id]._id, {
+        type: 'PUT',
+        data: JSON.stringify(dataArr[id]),
+        dataType: 'json',
+        contentType: 'application/json',
+        success:function(){
+          $(putThat).blur();  
+        },
+        error: function(){
+            console.log("There was an error");
+        }
+    });
     }
-  });
+    });
 $(".saved-results").on("click", ".delete", function(){
     var that = this;
     var result = dataArr[$(this).attr("id")];

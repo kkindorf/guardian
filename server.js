@@ -86,6 +86,34 @@ app.post('/savedArticles', function(req, res){
     });
 });
 
+app.put('/savedArticles/:id', function(req, res){
+    var article = req.body;
+    console.log(req.body);
+    console.log(req.params);
+    var id = req.params.id;
+    var newQuery = req.body.notes;
+    console.log(newQuery);
+    SavedArticles.findByIdAndUpdate(id, 
+    {
+        searchTerm: req.body.searchTerm,
+        subject: req.body.subject,
+        articleURL: req.body.articleURL,
+        title: req.body.title,
+        format: req.body.format,
+        notes: newQuery
+    },
+     function(err, data){
+        if (err) {
+      res.status(500).json({
+          message: 'Internal Server Error'
+      });
+        }
+        res.status(200).json({
+            message: "success!"
+        });
+    })
+})
+
 app.delete('/savedArticles/:id', function(req, res){
     console.log(req.params.id);
    var id = req.params.id;
