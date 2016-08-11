@@ -198,9 +198,10 @@ describe('Guardian', function(){
         
     })
     
-});
+
 after(function(done) {
         SavedArticle.remove(function() {
             done();
         });
     });
+});
