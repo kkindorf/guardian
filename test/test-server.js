@@ -198,10 +198,17 @@ describe('Guardian', function(){
         
     })
     
+<<<<<<< HEAD
 
+=======
+});
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
 after(function(done) {
         SavedArticle.remove(function() {
             done();
         });
     });
+<<<<<<< HEAD
 });
+=======
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea

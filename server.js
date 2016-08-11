@@ -31,7 +31,11 @@ if(require.main === module){
         }
     })
 }
+<<<<<<< HEAD
 //app.listen(process.env.PORT || 8080);
+=======
+
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
 
 
 exports.app = app;
@@ -107,6 +111,7 @@ app.put('/savedArticles/:id', function(req, res){
           message: 'Internal Server Error'
       });
         }
+<<<<<<< HEAD
         res.status(200).json({_id:id, 
         searchTerm: req.body.searchTerm,
         subject: req.body.subject,
@@ -114,6 +119,18 @@ app.put('/savedArticles/:id', function(req, res){
         title: req.body.title,
         format: req.body.format,
         notes: newNotes});
+=======
+        res.status(200).json(
+        {
+             _id:id, 
+             searchTerm: req.body.searchTerm,
+             subject: req.body.subject,
+             articleURL: req.body.articleURL,
+             title: req.body.title,
+             format: req.body.format,
+             notes: newNotes
+        });
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
     })
 })
 
@@ -133,4 +150,8 @@ app.use('*', function(req, res){
     res.status(404).json({
         message: 'Not Found'
     })
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea

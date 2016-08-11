@@ -1,7 +1,11 @@
 function getSavedArticles(callback){
     $.ajax({
         type: 'GET',
+<<<<<<< HEAD
         url: "/savedArticles",
+=======
+        url: "https://kkindorf-node-kkindorf.c9users.io/savedArticles",
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
         success: function(data){
             console.log(data);
             callback(data);
@@ -15,7 +19,11 @@ function displaySavedArticles(data){
     for (var i = 0;i<data.length;i++){
         console.log(data[i].title)
        
+<<<<<<< HEAD
         $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><h3>Click the space below me to add notes</h3><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
+=======
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
     }
 }
 
@@ -58,10 +66,19 @@ $(document).ready(function() {
         $(".saved-results").html('');
         getAndDisplaySavedArticles();
     })
+<<<<<<< HEAD
   var putThat;
   $(".saved-results").on("click",".edit", function(){
      putThat = this;
      $(this).text("");
+=======
+   
+       
+  var putThat;
+  $(".saved-results").on("click",".edit", function(){
+     putThat = this;
+     //$(this).text("");
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
     $(this).attr("contenteditable", "true");
     var pId = $(this).attr("id");
     //console.log(pId);
@@ -88,6 +105,10 @@ $(document).ready(function() {
         }
     });
     }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
     });
 $(".saved-results").on("click", ".delete", function(){
     var that = this;
@@ -108,9 +129,13 @@ $(".saved-results").on("click", ".delete", function(){
 
   
 });
+<<<<<<< HEAD
 //if I search for the same query more than once, it 
 //and save an article on the second search a query I used before it 
 //saves the first article I saved not the new article
+=======
+
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
 $(".results").on("click", ".save", function(){
     var that = this;
     var result = resultsArr[$(this).attr("id")];
@@ -128,7 +153,11 @@ $(".results").on("click", ".save", function(){
 
   $.ajax({
       type: 'POST',
+<<<<<<< HEAD
       url: '/savedArticles',
+=======
+      url: 'https://kkindorf-node-kkindorf.c9users.io/savedArticles',
+>>>>>>> 490d2bcfa84d323f2f17fdc43fcad84c62a96cea
       data: JSON.stringify(article),
         dataType: 'json',
         contentType: 'application/json',
