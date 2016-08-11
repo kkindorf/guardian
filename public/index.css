@@ -2,6 +2,20 @@
   padding-top:8%;
   
 }
+.header{
+  text-align: center;
+  margin-bottom:8%;
+  
+  
+}
+.description{
+    padding-top: 5%;
+    margin-top: 43%;
+    text-align: center;
+    margin: auto;
+    max-width: 65%;
+    line-height: 1.5em;
+}
 .pull-left, .pull-right{
   margin-right:10%;
   margin-left:10%;
@@ -47,6 +61,6 @@ p{
 }
 .edit{
   border: 1px solid blue;
-  min-height: 10px;
-  padding:3px;
+  min-height: 25px;
+  padding:5px;
 }

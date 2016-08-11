@@ -13,10 +13,10 @@ function displaySavedArticles(data){
     dataArr = data;
     
     for (var i = 0;i<data.length;i++){
-        console.log(data[i].title)
-
-
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+data[i].date+"</p><p>Format: "+data[i].format+"</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
+        var newDate = data[i].date.substring(0, 10);
+        var year = newDate.slice(0, 5);
+        newDate =newDate.substring(5, newDate.length)+"-"+year.substring(0, year.length-1);
+        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+newDate+"</p><p>Format: "+data[i].format+"</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
 
     }
 }
@@ -67,7 +67,7 @@ $(document).ready(function() {
     $(this).attr("contenteditable", "true");
     var pId = $(this).attr("id");
     //console.log(pId);
-    id = pId.substring(1, pId.length);
+   id = pId.substring(1, pId.length);
     id = parseInt(id);
     console.log(dataArr[id]._id);
    
@@ -75,6 +75,7 @@ $(document).ready(function() {
   })
     .keypress(function(e){
     if(e.which === 13){
+        
     dataArr[id].notes = $(putThat).html();
     console.log(dataArr[id].notes);
         $.ajax('/savedArticles/' + dataArr[id]._id, {
@@ -89,6 +90,7 @@ $(document).ready(function() {
             console.log("There was an error");
         }
     });
+    e.preventDefault();
     }
 
     });
@@ -100,7 +102,12 @@ $(".saved-results").on("click", ".delete", function(){
         type: 'DELETE',
         dataType: 'json',
         success:function(){
-           $(that).parents(".panel-default").remove(); 
+           $(that).parents(".panel-default").animate({
+               height: 0,
+               opacity: 0
+           }, 1000, function(){
+               $(this).remove();
+           });
         },
         error:function(){
             $(that).text("Error");
