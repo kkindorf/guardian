@@ -81,9 +81,7 @@ app.post('/savedArticles', function(req, res){
                 message: err
             });
         }
-        res.status(201).json({
-            message: "Successful post!"
-        });
+        res.status(201).json(article);
     });
 });
 
@@ -92,8 +90,8 @@ app.put('/savedArticles/:id', function(req, res){
     console.log(req.body);
     console.log(req.params);
     var id = req.params.id;
-    var newQuery = req.body.notes;
-    console.log(newQuery);
+    var newNotes = req.body.notes;
+    console.log(newNotes);
     SavedArticles.findByIdAndUpdate(id, 
     {
         searchTerm: req.body.searchTerm,
@@ -101,7 +99,7 @@ app.put('/savedArticles/:id', function(req, res){
         articleURL: req.body.articleURL,
         title: req.body.title,
         format: req.body.format,
-        notes: newQuery
+        notes: newNotes
     },
      function(err, data){
         if (err) {
@@ -109,9 +107,13 @@ app.put('/savedArticles/:id', function(req, res){
           message: 'Internal Server Error'
       });
         }
-        res.status(200).json({
-            message: "success!"
-        });
+        res.status(200).json({_id:id, 
+        searchTerm: req.body.searchTerm,
+        subject: req.body.subject,
+        articleURL: req.body.articleURL,
+        title: req.body.title,
+        format: req.body.format,
+        notes: newNotes});
     })
 })
 
