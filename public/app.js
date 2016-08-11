@@ -1,7 +1,7 @@
 function getSavedArticles(callback){
     $.ajax({
         type: 'GET',
-        url: "https://kkindorf-node-kkindorf.c9users.io/savedArticles",
+        url: "/savedArticles",
         success: function(data){
             console.log(data);
             callback(data);
@@ -128,7 +128,7 @@ $(".results").on("click", ".save", function(){
 
   $.ajax({
       type: 'POST',
-      url: 'https://kkindorf-node-kkindorf.c9users.io/savedArticles',
+      url: '/savedArticles',
       data: JSON.stringify(article),
         dataType: 'json',
         contentType: 'application/json',
