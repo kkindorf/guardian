@@ -11,9 +11,9 @@ function getSavedArticles(callback){
 
 function displaySavedArticles(data){
     dataArr = data;
-    
+    var newDate="";
     for (var i = 0;i<data.length;i++){
-        var newDate = data[i].date.substring(0, 10);
+        newDate = data[i].date.substring(0, 10);
         var year = newDate.slice(0, 5);
         newDate =newDate.substring(5, newDate.length)+"-"+year.substring(0, year.length-1);
         $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h3 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h3></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+newDate+"</p><p>Format: "+data[i].format+"</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
