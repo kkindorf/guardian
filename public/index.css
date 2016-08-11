@@ -42,3 +42,11 @@ p{
   top:0;
   
 }
+.instructions{
+  padding-bottom: 0;
+}
+.edit{
+  border: 1px solid blue;
+  min-height: 10px;
+  padding:3px;
+}
