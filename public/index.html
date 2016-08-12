@@ -4,31 +4,31 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="animate.css" type="text/css"/>
     <link rel="stylesheet" href="index.css" type="text/css"/>
     <title>Guardian Saver</title>
 </head>
-<div class="container-fluid">
+  <body>
+  <div class="container-fluid">
+      <div class="row">
+       <div class="container">
+           <h1 class="header">Guardian Saver</h1>
+           <button class="btn btn-default top-buttons saved" role="button">Saved Articles</button>
+           <button class="btn btn-default top-buttons pull-right" role="button">Sign In</button>
+       </div>
+    </div>        
     <div class="row">
-     <div class="container">
-         <h1 class="header">Guardian Saver</h1>
-         <button class="btn btn-default top-buttons saved" role="button">Saved Articles</button>
-         <button class="btn btn-default top-buttons pull-right" role="button">Sign In</button>
-     </div>
-  </div>        
-  <div class="row">
-    <h3 class="description">Find articles from The <em>Guardian</em> news site and save them for later. Permanently if you want.</h3>
-    <form>
-      <div class="form">
-        <button class="btn btn-default search" type="submit">Search</button>
-        <input type="text" class="form-control" id="term" placeholder="Enter a Search Term">
-      </div>
-    </form>
-    <div class="results"></div>
-    <div class="saved-results"></div>
-  </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-</body>
+      <h3 class="description">Find articles from The <em>Guardian</em> news site and save them for later. Permanently if you want.</h3>
+      <form>
+        <div class="form">
+          <button class="btn btn-default search" type="submit">Search</button>
+          <input type="text" class="form-control" id="term" placeholder="Enter a Search Term">
+        </div>
+      </form>
+      <div class="results"></div>
+      <div class="saved-results"></div>
+    </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="app.js"></script>
+  </body>
 </html>

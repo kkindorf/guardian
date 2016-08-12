@@ -7,8 +7,8 @@ var ArticleSchema = new mongoose.Schema({
     format: String,
     notes: String,
     date: { type: Date, default: Date.now }
-})
+});
 
-var SavedArticle = mongoose.model('SavedArticle', ArticleSchema);
+var SavedArticle = mongoose.model("SavedArticle", ArticleSchema);
 
 module.exports = SavedArticle;

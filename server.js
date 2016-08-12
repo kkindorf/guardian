@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var config = require("./config");
@@ -6,7 +6,7 @@ var https = require("https");
 
 var app = express();
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 
 var runServer = function(callback){
@@ -16,7 +16,7 @@ var runServer = function(callback){
         }
         //else
         app.listen(config.PORT, function(){
-            console.log('Listening on localhost:'+ config.PORT);
+            console.log("Listening on localhost:"+ config.PORT);
             if(callback){
                 callback();
             }
@@ -37,7 +37,7 @@ exports.runServer = runServer;
 
 var SavedArticles = require("./models/saved_articles");
 
-app.get('/search', function(req, res){
+app.get("/search", function(req, res){
     console.log("hello");
    
    var arr = Object.keys(req.query);
@@ -51,18 +51,18 @@ app.get('/search', function(req, res){
    })
 });
 
-app.get('/savedArticles', function(req, res){
+app.get("/savedArticles", function(req, res){
     SavedArticles.find(function(err, articles){
         if(err){
             return res.status(500).json({
-                message: 'Internal Server error'
+                message: "Internal Server error"
             })
         }
         res.json(articles)
     });
 });
 
-app.post('/savedArticles', function(req, res){
+app.post("/savedArticles", function(req, res){
     //console.log(req.params);
     SavedArticles.create({
         //body is an object in our request json object
@@ -83,13 +83,10 @@ app.post('/savedArticles', function(req, res){
     });
 });
 
-app.put('/savedArticles/:id', function(req, res){
+app.put("/savedArticles/:id", function(req, res){
     var article = req.body;
-    console.log(req.body);
-    console.log(req.params);
     var id = req.params.id;
     var newNotes = req.body.notes;
-    console.log(newNotes);
     SavedArticles.findByIdAndUpdate(id, 
     {
         searchTerm: req.body.searchTerm,
@@ -102,7 +99,7 @@ app.put('/savedArticles/:id', function(req, res){
      function(err, data){
         if (err) {
       res.status(500).json({
-          message: 'Internal Server Error'
+          message: "Internal Server Error"
       });
         }
 
@@ -120,8 +117,7 @@ app.put('/savedArticles/:id', function(req, res){
     })
 })
 
-app.delete('/savedArticles/:id', function(req, res){
-    console.log(req.params.id);
+app.delete("/savedArticles/:id", function(req, res){
    var id = req.params.id;
    SavedArticles.findByIdAndRemove(id, function(error){
        if(error){
@@ -132,9 +128,9 @@ app.delete('/savedArticles/:id', function(req, res){
        res.status(200).json(id);
    })
 })
-app.use('*', function(req, res){
+app.use("*", function(req, res){
     res.status(404).json({
-        message: 'Not Found'
+        message: "Not Found"
     })
 
 })
