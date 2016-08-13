@@ -1,7 +1,7 @@
 # guardian Saver
 
 ## API Overview
-+++++++++++++++++++++
+
 The API created for this application displays and stores data into a mongoDB database with data taken from the Guardian news resource's own API.
 The Guardian Saver's API stores objects with the following types of data: 
 ```
@@ -52,7 +52,7 @@ As you can see if the user clicks inside the blue box at the bottom of the panel
 saved once the user hits the return key. 
 
 ## Technologies Used
-+++++++++++++++++++++
+
 The technologies used for this application include jQuery which helped significantly with making this application a single page app, Express.js and Node.js
 for developing the server and routes as well as our requests to the Guardian api. The data is currently being stored in a MongoDB database. 
 Unit tests are being conducted with Mocha and Chai. Travis CI is being used to automate our tests and Heroku is being used to host our production application.
