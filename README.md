@@ -18,10 +18,10 @@ The Guardian Saver's API stores objects with the following types of data:
 }
 ```
 The above snippet is a typical object inside Guardian Saver's API. When a user clicks on the save button, the data given to us from an initial GET request
-to the Guardian's API will be extracted into another object which is passed to Guardian Saver's savedArticles endpoint. This new object will store the search term used to query the Guardian's API, 
+to the Guardian's API will be extracted into another object which is passed to Guardian Saver's `/savedArticles` endpoint. This new object will store the search term used to query the Guardian's API, 
 the subject of the article that the user wants to save, the article url so the user can link back to the article, the title, 
 the format, the date which stores the date and time of when the user submitted the search query and there is also a empty string value attached to the notes key. 
-This notes key will store new notes that the user adds themselves via a POST request after a GET request is made to Guadian Saver's /savedArticles endpoint.
+This notes key will store new notes that the user adds themselves via a POST request after a GET request is made to Guadian Saver's `/savedArticles` endpoint.
 
 The following image displays a result of the user filling out the form with a search query to the Guardian's API:
 
@@ -32,7 +32,7 @@ Each request made to the Guardian API returns 10 results, or a single page of ar
 If a user clicks on the Next or Previous buttons at the bottom of the list, they will set off another GET request to the guadian API but the
 result will be the next or previous page of the full request to the Guardian using the same search query. 
 
-When a user clicks on the Saved Articles button:
+When a user clicks on the Saved For Later button:
 
 ![alt tag](http://i1167.photobucket.com/albums/q625/Kevin_Kindorf/Screen%20Shot%202016-08-12%20at%208.35.47%20PM_zpsai62f6aw.png)
 
@@ -42,12 +42,12 @@ If a user decides they want to conduct another search query they can do so since
 designed to be a single page application that makes it easy for the user to quickly search for articles, save them and add notes 
 in the easiest way possible without having to deal with browser refreshes. 
 
-An example of the data being laid out after a get request to the /savedArticles endpoint looks like the following:
+An example of the data being laid out after a get request to the `/savedArticles` endpoint looks like the following:
 
 ![alt tag](http://i1167.photobucket.com/albums/q625/Kevin_Kindorf/Screen%20Shot%202016-08-12%20at%208.47.12%20PM_zpst5d956yt.png)
 
 Once the user clicks on the Saved Articles button a list of all of the saved articles will be displayed in place of any other content that may
-have been showing previously. All six keys from the object we created on our POST request to the /savedArticles endpoint is being displayed.
+have been showing previously. All six keys from the object we created on our POST request to the `/savedArticles` endpoint is being displayed.
 As you can see if the user clicks inside the blue box at the bottom of the panel, they wll be able to add text to that box which will be 
 saved once the user hits the return key. 
 
