@@ -32,7 +32,7 @@ Each request made to the Guardian API returns 10 results, or a single page of ar
 If a user clicks on the Next or Previous buttons at the bottom of the list, they will set off another GET request to the guadian API but the
 result will be the next or previous page of the full request to the Guardian using the same search query. 
 
-When a user clicks on the Saved For Later button:
+When a user clicks on the Save For Later button:
 
 ![alt tag](http://i1167.photobucket.com/albums/q625/Kevin_Kindorf/Screen%20Shot%202016-08-12%20at%208.35.47%20PM_zpsai62f6aw.png)
 
