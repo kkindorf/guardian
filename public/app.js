@@ -25,6 +25,7 @@ function getAndDisplaySavedArticles(){
 var post =[];
 var dataArr=[];
 var id="";
+var count = 1;
 $(document).ready(function(){
 
     var searchTerm = "";
@@ -33,24 +34,33 @@ $(document).ready(function(){
     var resultsArr = [];
     form.submit(function(e){
         e.preventDefault();
+        $(".results-buttons").hide();
+        $(".next").hide();
+        $(".previous").hide();
         searchTerm = $("#term").val();
         $("input").val("");
         $(".results").html("");
         $(".saved-results").html("");
-        var ajax = $.ajax("/search?" + searchTerm, {
+        var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
             type: "GET",
             dataType: "json"
         });
         ajax.done(function (data){
             resultsArr = data.response.results;
             for(var i = 0; i <resultsArr.length; i++){
-                $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save for Later</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+                $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
             }
+            $(".results-buttons").show();
+            $(".next").show();
+            $(".previous").show();
         });
     })
 
 
-    $(".saved").click(function(){   
+    $(".saved").click(function(){  
+        $(".results-buttons").hide();
+        $(".next").hide();
+        $(".previous").hide();
         $(".results").html("");
         $(".saved-results").html("");
         getAndDisplaySavedArticles();
@@ -85,6 +95,7 @@ $(document).ready(function(){
         });
         
     $(".saved-results").on("click", ".delete", function(){
+        
         var that = this;
         var result = dataArr[$(this).attr("id")];
         $.ajax("/savedArticles/" + result._id, {
@@ -140,4 +151,49 @@ $(document).ready(function(){
                 }
             });   
       });
+      $(".next").on("click", function(){
+        count++;
+        $(".results").html("");
+        $(".results-buttons").hide();
+        $(".next").hide();
+        $(".previous").hide();
+        var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
+            type: "GET",
+            dataType: "json"
+        });
+        ajax.done(function (data){
+            resultsArr = data.response.results;
+            for(var i = 0; i <resultsArr.length; i++){
+                $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+            }
+            $(".results-buttons").show();
+            $(".next").show();
+            $(".previous").show();
+        });
+      })
+      $(".previous").on("click", function(){
+          count--;
+          if(count ===1){
+              return false;
+          }
+          else{
+              $(".results").html("");
+              $(".results-buttons").hide();
+                $(".next").hide();
+                $(".previous").hide();
+              var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
+                    type: "GET",
+                    dataType: "json"
+             });
+             ajax.done(function (data){
+                resultsArr = data.response.results;
+                for(var i = 0; i <resultsArr.length; i++){
+                    $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+                }
+                $(".results-buttons").show();
+                $(".next").show();
+                $(".previous").show();
+            });
+        }
+    })
 });
