@@ -47,14 +47,14 @@ An example of the data being laid out after a get request to the `/savedArticles
 ![alt tag](http://i1167.photobucket.com/albums/q625/Kevin_Kindorf/Screen%20Shot%202016-08-12%20at%208.47.12%20PM_zpst5d956yt.png)
 
 Once the user clicks on the Saved Articles button a list of all of the saved articles will be displayed in place of any other content that may
-have been showing previously. All six keys from the object we created on our POST request to the `/savedArticles` endpoint is being displayed.
-As you can see if the user clicks inside the blue box at the bottom of the panel, they wll be able to add text to that box which will be 
+have been showing previously. All six keys from the object we created on our POST request to the `/savedArticles` endpoint are being displayed.
+As you can see, if the user clicks inside the blue box at the bottom of the panel, they wll be able to add text to that box which will be 
 saved once the user hits the return key. 
 
 ## Technologies Used
 
-The technologies used for this application include jQuery which helped significantly with making this application a single page app, Express.js and Node.js
-for developing the server and routes as well as our requests to the Guardian api. The data is currently being stored in a MongoDB database. 
+The technologies used for this application include jQuery which helped significantly with making this application a single page app. Express.js and Node.js
+are used to develop the server and routes as well as our requests to the Guardian API. The data is currently being stored in a MongoDB database. 
 Unit tests are being conducted with Mocha and Chai. Travis CI is being used to automate our tests and Heroku is being used to host our production application.
 
 
