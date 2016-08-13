@@ -3,38 +3,70 @@
 }
 
 .container{
-  padding-top:8%;
-  
+  background: #6495ED;
+  width: 100%;
+  padding-bottom:3%;
+  color:white;
 }
 .header{
+  padding-top:1.2%;
   margin: auto;
   text-align: center;
   max-width: 65%;
+  
 }
 .title{
-  font-size: 2.5em;
+  font-size: 3em;
+  font-weight: bolder;
+  white-space: nowrap;
 }
 
 .description{
-  padding-top: 5%;
-  line-height: 1.3em;
+  font-size: 1.2em;
+  padding-top: 2%;
+  line-height: 1.4em;
 }
-.pull-left, .pull-right{
-  margin-right:10%;
-  margin-left:10%;
+.button-wrapper{
+  white-space: nowrap;
+}
+
+.saved{
+  margin-right:2%;
+  border-radius: 0;
+  background: #32CD32;
+  border: none;
+}
+.sign-in{
+  margin-left:2%;
+  border-radius: 0;
+  background: #FF6347;
+  border: none;
+}
+.saved:hover{
+  background-color: #32CD32;
+  border: none;
+}
+.saved:click{
+  background-color: #32CD32;
+  border: none;
+}
+.sign-in:hover{
+  background-color: #FF6347;
+  border: none;
 }
 .form{
-  padding: 5%;
-  width: 50%;
+  font-weight: bold;
+  padding: 3.5%;
+  width: 80%;
   margin: auto;
-  position: relative;
 }
-.search{
-  position: absolute;
-  right: 10%;
+.form-control{
+  height: 45px;
+  border: 1px solid #6495ED !important;
 }
+
 .panel{
-  width: 50%;
+  width: 80%;
   margin: auto;
   margin-bottom:3%;
   
@@ -45,14 +77,18 @@
 .save{
   position: absolute;
   right: 5%;
- 
 }
 p{
   padding-bottom:2%;
+  font-weight: bold;
 }
 .saved-articles-panel{
   position: relative;
+  background: none !important;
+  color: #e65c00 !important;
+  
 }
+
 .delete{
   position: absolute;
   right: 3%;
@@ -63,8 +99,8 @@ p{
   padding-bottom: 0;
 }
 .edit{
-  border: 1px solid blue;
-  min-height: 30px;
+  border: .2px solid blue;
+  min-height: 40px;
   padding:5px;
 }
 
@@ -72,6 +108,6 @@ p{
   display:none;
   font-size: 2em;
   margin: auto;
-  width:40%;
+  width:85%;
   
 }
