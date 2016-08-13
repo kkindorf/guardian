@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var config = require("./config");
-var https = require("https");
+var http = require("http");
 
 var app = express();
 app.use(bodyParser.json());
@@ -37,16 +37,13 @@ exports.runServer = runServer;
 
 var SavedArticles = require("./models/saved_articles");
 
+
 app.get("/search", function(req, res){
-    console.log("hello");
    
    var arr = Object.keys(req.query);
-   console.log(arr[0]);
-   var url = "https://content.guardianapis.com/search?q="+arr[0]+"&api-key=b3970af8-30fc-4f88-a6d0-2e93e044a43c";
+   var url = "http://content.guardianapis.com/search?q="+arr[1]+"&page="+arr[0]+"&api-key=b3970af8-30fc-4f88-a6d0-2e93e044a43c";
    
-   https.get(url, function(resp){
-       //readable stream
-       res.headers = resp.headers;
+   http.get(url, function(resp){
        resp.pipe(res);
    })
 });

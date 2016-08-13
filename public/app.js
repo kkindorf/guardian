@@ -24,19 +24,25 @@ function getAndDisplaySavedArticles(){
 var post =[];
 var dataArr=[];
 var id="";
+var count = 1;
 $(document).ready(function(){
 
     var searchTerm = "";
     var form = $("form");
     var webTitle ="";
     var resultsArr = [];
+    var count = 1;
+    
     form.submit(function(e){
+        
         e.preventDefault();
+        
         searchTerm = $("#term").val();
         $("input").val("");
         $(".results").html("");
         $(".saved-results").html("");
-        var ajax = $.ajax("/search?" + searchTerm, {
+        
+        var ajax = $.ajax("/search?" + searchTerm+"&"+count, {
             type: "GET",
             dataType: "json"
         });
@@ -45,11 +51,15 @@ $(document).ready(function(){
             for(var i = 0; i <resultsArr.length; i++){
                 $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save for Later</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
             }
+             $(".results-buttons").show();
+             $(".next").show();
+             $(".previous").show();
         });
     })
 
 
-    $(".saved").click(function(){   
+    $(".saved").click(function(){
+        $(".results-buttons").hide();
         $(".results").html("");
         $(".saved-results").html("");
         getAndDisplaySavedArticles();
@@ -75,7 +85,7 @@ $(document).ready(function(){
                         $(putThat).blur();  
                     },
                     error: function(){
-                        console.log("There was an error");
+                        alert("There was an error. Please try again later.");
                     }
                 });
                 e.preventDefault();
@@ -105,7 +115,6 @@ $(document).ready(function(){
         });
     });
 
-
     $(".results").on("click", ".save", function(){
         var that = this;
         var result = resultsArr[$(this).attr("id")];
@@ -126,17 +135,69 @@ $(document).ready(function(){
                 dataType: "json",
                 contentType: "application/json",
                 success: function(data){
-                    $(that).attr("disabled", "false");
+                    $(that).attr("disabled", null);
                     $(that).text("Saved!");
                     $(that).css("color", "white");
                     $(that).css("background", "green");
                 }, 
                 error: function(err) {
-                    $(that).attr("disabled", "false");
+                    $(that).attr("disabled", null);
                     $(that).text("Error");
                     $(that).css("color", "white");
                     $(that).css("background", "red");
                 }
             });   
       });
+      
+      $(".previous").on("click", function(){
+               count--;
+          
+          if(count <= 1){
+              $(".previous").attr("disabled", "true");
+          }
+          else{
+              $(".previous").attr("disabled", null);
+               count--;
+               $(".results-buttons").hide();
+               $(".next").hide();
+               $(".previous").hide();
+               $(".results").html("");
+               
+                var ajax = $.ajax("/search?" + searchTerm+"&"+count, {
+                type: "GET",
+                dataType: "json"
+            });
+            ajax.done(function (data){
+                resultsArr = data.response.results;
+                for(var i = 0; i <resultsArr.length; i++){
+                    $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save for Later</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+                }
+                $(".results-buttons").show();
+                $(".next").show();
+                $(".previous").show();
+            });
+                
+          };
+      });
+      
+      $(".next").on("click", function(){
+          $(".results-buttons").hide();
+          $(".next").hide();
+          $(".previous").hide();
+          $(".results").html("");
+          count++;
+          var ajax = $.ajax("/search?" + searchTerm+"&"+count, {
+                type: "GET",
+                dataType: "json"
+          });
+          ajax.done(function (data){
+              resultsArr = data.response.results;
+              for(var i = 0; i <resultsArr.length; i++){
+                  $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save for Later</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+              }
+              $(".results-buttons").show();
+              $(".next").show();
+              $(".previous").show();
+         });
+     });
 });
