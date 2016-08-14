@@ -53,10 +53,9 @@ saved once the user hits the return key.
 
 ## Technologies Used
 
-The technologies used for this application include jQuery which helped significantly with making this application a single page app. Express.js and Node.js
+The technologies used for this application include Bootstrap for a responsive design, jQuery which helped significantly with making this application a single page app, Express.js and Node.js
 are used to develop the server and routes as well as our requests to the Guardian API. The data is currently being stored in a MongoDB database. 
-Unit tests are being conducted with Mocha and Chai. Travis CI is being used to automate our tests and Heroku is being used to host our production application.
+Unit tests are being conducted with Mocha and Chai. Travis CI is being used to automate the tests and Heroku is being used to host the production application.
 
 
-
-
+Note: This is a Minimum Viable Product. I was considering requiring users to make their own accounts so they can save their individual articles for themselves but now that multiple people have tested the application, and other users can see the articles others have saved, I actually like the idea of this being more of social application that an individualized article saving and not taking app. That being said I think there could be a lot of potential to have both options available to the user as well and the adjustments to make this work would be relatively simple while still maintaining the single page functionality.
