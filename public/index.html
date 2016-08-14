@@ -1,43 +1,46 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="index.css" type="text/css"/>
+    <link rel="stylesheet" href="index.css" type="text/css" />
     <title>Guardian Saver</title>
 </head>
-  <body>
-  <div class="container-fluid">
-      <div class="row">
-       <div class="container">
-        <div class="header">
-          <h1 class="title">Guardian Saver</h1>
-           <p class="description">Use the form to find articles from The <em>Guardian</em> news site.</p>
-           <div class="button-wrap">
-              <button class="btn btn-primary btn-lg saved" role="button">Saved Articles</button>
-           </div>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="header">
+                    <h1 class="title">Guardian Saver</h1>
+                    <p class="description">Use the form to find articles from The <em>Guardian</em> news site.</p>
+                    <div class="button-wrap">
+                        <button class="btn btn-primary btn-lg saved" role="button">Saved Articles</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <form>
+                    <div class="form">
+                        <input type="text" class="form-control" id="term" placeholder="Enter a Search Term and hit enter">
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="results"></div>
+                <div class="saved-results"></div>
+                <div class="results-buttons">
+                    <a class="previous pull-left" href="#" role="button">Previous</a>
+                    <a class="next pull-right" href="#" role="button">Next</a>
+                </div>
+            </div>
         </div>
-       </div>
-      <div class="row">
-      <form>
-        <div class="form">
-          <input type="text" class="form-control" id="term" placeholder="Enter a Search Term and hit enter">
-        </div>
-      </form>
-    </div>
-    <div class="row">
-      <div class="results"></div>
-      <div class="saved-results"></div>
-      <div class="results-buttons">
-        <a class="previous pull-left" href="#" role="button">Previous</a>
-        <a class="next pull-right" href="#" role="button">Next</a>
-      </div>
-    </div>
-    </div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="app.js"></script>
-  </body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+</body>
+
 </html>

@@ -1,91 +1,105 @@
+//JS variables
+var post = [];
+var dataArr = [];
+var id = "";
+var count = 1;
+var searchTerm = "";
+var webTitle = "";
+var resultsArr = [];
 
-function getSavedArticles(callback){
+//jQuery Variables
+var form = $("form");
+var savedResults = $(".saved-results");
+var resultsButtons = $(".results-buttons");
+var nextButton = $(".next");
+var previousButton = $(".previous");
+var input = $("input");
+var results = $(".results");
+var savedResults = $(".saved-results");
+var savedArticles = $(".saved");
+
+function getSavedArticles(callback) {
     $.ajax({
         url: "/savedArticles",
-        success: function(data){
+        success: function(data) {
             callback(data);
         }
     });
 };
 
-function displaySavedArticles(data){
+function displaySavedArticles(data) {
     dataArr = data;
-    var newDate="";
-    for (var i = 0;i<data.length;i++){
+    var newDate = "";
+    for (var i = 0; i < data.length; i++) {
         newDate = data[i].date.substring(0, 10);
         var year = newDate.slice(0, 5);
-        newDate =newDate.substring(5, newDate.length)+"-"+year.substring(0, year.length-1);
-        $(".saved-results").append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='"+i+"' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h5 class='panel-title'>Search Query Used: "+ data[i].searchTerm+"</h5></div><div class='panel-body'><p>Title: <a href="+data[i].articleURL+" target='_blank'>"+data[i].title+"</a></p><p>Date Searched: "+newDate+"</p><p>Format: "+data[i].format+"</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p"+i+"'>"+data[i].notes+"</p></div></div>");
+        newDate = newDate.substring(5, newDate.length) + "-" + year.substring(0, year.length - 1);
+        savedResults.append("<div class='panel panel-default saved-panel'><div class='panel-heading saved-articles-panel'><button type='button' id='" + i + "' class='btn btn-default delete' aria-label='Left Align'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button><h5 class='panel-title'>Search Query Used: " + data[i].searchTerm + "</h5></div><div class='panel-body'><p>Title: <a href=" + data[i].articleURL + " target='_blank'>" + data[i].title + "</a></p><p>Date Searched: " + newDate + "</p><p>Format: " + data[i].format + "</p><p class='instructions'>Click the box to add notes:</p><p class='edit' id='p" + i + "'>" + data[i].notes + "</p></div></div>");
 
     }
 }
-function getAndDisplaySavedArticles(){
+
+function getAndDisplaySavedArticles() {
     getSavedArticles(displaySavedArticles);
 }
-var post =[];
-var dataArr=[];
-var id="";
-var count = 1;
-$(document).ready(function(){
 
-    var searchTerm = "";
-    var form = $("form");
-    var webTitle ="";
-    var resultsArr = [];
-    form.submit(function(e){
+$(document).ready(function() {
+
+    form.submit(function(e) {
         e.preventDefault();
-        $(".results-buttons").hide();
-        $(".next").hide();
-        $(".previous").hide();
+        resultsButtons.hide();
+        nextButton.hide();
+        previousButton.hide();
         searchTerm = $("#term").val();
-        $("input").val("");
-        $(".results").html("");
-        $(".saved-results").html("");
-        var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
+        input.val("");
+        results.html("");
+        savedResults.html("");
+        var ajax = $.ajax("/search?" + searchTerm + "&" + count, {
             type: "GET",
             dataType: "json"
         });
-        ajax.done(function (data){
+        ajax.done(function(data) {
             resultsArr = data.response.results;
-            for(var i = 0; i <resultsArr.length; i++){
-                $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+            for (var i = 0; i < resultsArr.length; i++) {
+                results.append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='" + i + "'>Save</button><p>" + resultsArr[i].sectionName + "</p><p><a href='" + resultsArr[i].webUrl + "' target='_blank'>" + resultsArr[i].webTitle + "</a></p></div></div>");
             }
-            $(".results-buttons").show();
-            $(".next").show();
-            $(".previous").show();
+            resultsButtons.show();
+            nextButton.show();
+            previousButton.show();
         });
     })
 
 
-    $(".saved").click(function(){  
-        $(".results-buttons").hide();
-        $(".next").hide();
-        $(".previous").hide();
-        $(".results").html("");
-        $(".saved-results").html("");
+    savedArticles.click(function() {
+        resultsButtons.hide();
+        nextButton.hide();
+        previousButton.hide();
+        results.html("");
+        savedResults.html("");
+        $(this).blur();
         getAndDisplaySavedArticles();
     })
 
     var putThat;
-    $(".saved-results").on("click",".edit", function(){
-        putThat = this;
-        $(this).attr("contenteditable", "true");
-        var pId = $(this).attr("id");
-        id = pId.substring(1, pId.length);
-        id = parseInt(id);
-    })
-        .keypress(function(e){
-            if(e.which === 13){
+    savedResults.on("click", ".edit", function() {
+            putThat = this;
+            $(this).attr("contenteditable", "true");
+            var pId = $(this).attr("id");
+            id = pId.substring(1, pId.length);
+            id = parseInt(id);
+        })
+        .keypress(function(e) {
+            if (e.which === 13) {
                 dataArr[id].notes = $(putThat).html();
                 $.ajax("/savedArticles/" + dataArr[id]._id, {
                     type: "PUT",
                     data: JSON.stringify(dataArr[id]),
                     dataType: "json",
                     contentType: "application/json",
-                    success:function(){
-                        $(putThat).blur();  
+                    success: function() {
+                        $(putThat).blur();
                     },
-                    error: function(){
+                    error: function() {
                         console.log("There was an error");
                     }
                 });
@@ -93,23 +107,23 @@ $(document).ready(function(){
             }
 
         });
-        
-    $(".saved-results").on("click", ".delete", function(){
-        
+
+    savedResults.on("click", ".delete", function() {
+
         var that = this;
         var result = dataArr[$(this).attr("id")];
         $.ajax("/savedArticles/" + result._id, {
             type: "DELETE",
             dataType: "json",
-            success:function(){
+            success: function() {
                 $(that).parents(".panel-default").animate({
-                height: 0,
-                opacity: 0
-                }, 1000, function(){
+                    height: 0,
+                    opacity: 0
+                }, 1000, function() {
                     $(this).remove();
                 });
             },
-            error:function(){
+            error: function() {
                 $(that).text("Error");
                 $(that).css("background", "red");
                 $(that).css("color", "white");
@@ -118,81 +132,81 @@ $(document).ready(function(){
     });
 
 
-    $(".results").on("click", ".save", function(){
+    results.on("click", ".save", function() {
         var that = this;
         var result = resultsArr[$(this).attr("id")];
         var article = {
             searchTerm: searchTerm,
-            subject:  result.sectionName,
+            subject: result.sectionName,
             articleURL: result.webUrl,
-            title: result.webTitle,   
+            title: result.webTitle,
             format: result.type
         };
-            $(this).attr("disabled", "true");
-            $(this).text("Saving...");
-      
-            $.ajax({
-                type: "POST",
-                url: "/savedArticles",
-                data: JSON.stringify(article),
-                dataType: "json",
-                contentType: "application/json",
-                success: function(data){
-                    $(that).attr("disabled", "false");
-                    $(that).text("Saved!");
-                    $(that).css("color", "white");
-                    $(that).css("background", "green");
-                }, 
-                error: function(err) {
-                    $(that).attr("disabled", "false");
-                    $(that).text("Error");
-                    $(that).css("color", "white");
-                    $(that).css("background", "red");
-                }
-            });   
-      });
-      $(".next").on("click", function(){
+        $(this).attr("disabled", "true");
+        $(this).text("Saving...");
+
+        $.ajax({
+            type: "POST",
+            url: "/savedArticles",
+            data: JSON.stringify(article),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data) {
+                $(that).attr("disabled", null);
+                $(that).text("Saved!");
+                $(that).css("color", "white");
+                $(that).css("background", "green");
+            },
+            error: function(err) {
+                $(that).attr("disabled", null);
+                $(that).text("Error");
+                $(that).css("color", "white");
+                $(that).css("background", "red");
+            }
+        });
+    });
+    nextButton.on("click", function() {
         count++;
-        $(".results").html("");
-        $(".results-buttons").hide();
-        $(".next").hide();
-        $(".previous").hide();
-        var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
+        results.html("");
+        resultsButtons.hide();
+        nextButton.hide();
+        previousButton.hide();
+        var ajax = $.ajax("/search?" + searchTerm + "&" + count, {
             type: "GET",
             dataType: "json"
         });
-        ajax.done(function (data){
+        ajax.done(function(data) {
             resultsArr = data.response.results;
-            for(var i = 0; i <resultsArr.length; i++){
-                $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+            for (var i = 0; i < resultsArr.length; i++) {
+                results.append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='" + i + "'>Save</button><p>" + resultsArr[i].sectionName + "</p><p><a href='" + resultsArr[i].webUrl + "' target='_blank'>" + resultsArr[i].webTitle + "</a></p></div></div>");
             }
-            $(".results-buttons").show();
-            $(".next").show();
-            $(".previous").show();
+            resultsButtons.show();
+            nextButton.show();
+            previousButton.show();
         });
-      })
-      $(".previous").on("click", function(){
-          count--;
-          if(count ===1){
-              return false;
-          }
-          else{
-              $(".results").html("");
-              $(".results-buttons").hide();
-                $(".next").hide();
-                $(".previous").hide();
-              var ajax = $.ajax("/search?" + searchTerm +"&"+count, {
-                    type: "GET",
-                    dataType: "json"
-             });
-             ajax.done(function (data){
+    })
+    previousButton.on("click", function() {
+        
+        if (count === 1) {
+            return false;
+        } else {
+            count--;
+            results.html("");
+            resultsButtons.hide();
+            nextButton.hide();
+            previousButton.hide();
+            var ajax = $.ajax("/search?" + searchTerm + "&" + count, {
+                type: "GET",
+                dataType: "json"
+            });
+            ajax.done(function(data) {
                 resultsArr = data.response.results;
-                for(var i = 0; i <resultsArr.length; i++){
-                    $(".results").append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='"+i+"'>Save</button><p>"+resultsArr[i].sectionName+"</p><p><a href='"+resultsArr[i].webUrl+"' target='_blank'>"+resultsArr[i].webTitle+"</a></p></div></div>");
+                for (var i = 0; i < resultsArr.length; i++) {
+                    results.append("<div class='panel panel-default'><div class='panel-body'><button type='button'  class='btn btn-default save' id='" + i + "'>Save</button><p>" + resultsArr[i].sectionName + "</p><p><a href='" + resultsArr[i].webUrl + "' target='_blank'>" + resultsArr[i].webTitle + "</a></p></div></div>");
                 }
-                $(".results-buttons").show();
-                $(".next").show();
-                $(".previous").show();
+                resultsButtons.show();
+                nextButton.show();
+                previousButton.show();
             });
         }
     })
